@@ -10,6 +10,13 @@
   "engines": {
     "node": ">= 14"
   },
+  "repository": {
+    "directory": "https://github.com/OgabekYuldoshev/lanchat",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/OgabekYuldoshev/lanchat/issues"
+  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "tsx src/main.ts",
@@ -24,7 +31,7 @@
     "lan",
     "lanchat"
   ],
-  "author": "OgabekYuldoshev",
+  "author": "Ogabek Yuldoshev <https://github.com/OgabekYuldoshev>",
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.4.1",

@@ -18,7 +18,6 @@
 	},
 	"files": ["dist", "package.json"],
 	"scripts": {
-		"preinstall": "npx only-allow pnpm",
 		"dev": "tsx src/main.ts",
 		"build:win": "nexe dist/main.mjs -t windows-x64 -o bin/choyxona-win.exe --build",
 		"build:mac": "nexe dist/main.mjs -t mac-x64 -o bin/choyxona-mac --build",

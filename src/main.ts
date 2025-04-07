@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import net from "node:net";
+import os from "node:os";
 import chalk from "chalk";
 import ora from "ora";
 import { startClient } from "./client";
@@ -9,11 +10,33 @@ import { startServer } from "./server";
 
 const PORT = 12211;
 
+function getLocalIpAddress(): string {
+	const interfaces = os.networkInterfaces();
+	for (const name of Object.keys(interfaces)) {
+		for (const iface of interfaces[name] || []) {
+			if (
+				iface.family === "IPv4" &&
+				!iface.internal &&
+				iface.address.startsWith("192.")
+			) {
+				return iface.address;
+			}
+		}
+	}
+	return "";
+}
+
 (async () => {
 	const spinner = ora("🔍 Server qidirilmoqda LAN ichida...").start();
 
 	const foundHost = await findLanServer(PORT);
-	const host = foundHost ?? "127.0.0.1";
+	const localIp = getLocalIpAddress();
+
+	if (!localIp) {
+		throw new Error("Local IP address not found");
+	}
+
+	const host = foundHost ?? localIp;
 
 	spinner.stop();
 

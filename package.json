@@ -1,6 +1,6 @@
 {
 	"name": "choyxona",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Choyxona for uzbek developers !!!",
 	"main": "dist/main.js",
 	"type": "module",

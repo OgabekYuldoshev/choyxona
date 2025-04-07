@@ -1,0 +1,54 @@
+{
+  "name": "lanchat",
+  "version": "1.0.0",
+  "description": "LanChat for uzbek developers !!!",
+  "main": "dist/index.js",
+  "bin": {
+    "lanchat": "dist/index.js"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">= 14"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "tsx src/main.ts",
+    "build": "tsup ./src/main.ts",
+    "start": "node ./dist/main.js",
+    "lint": "pnpm biome check --write ./src",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "chat",
+    "socket",
+    "lan",
+    "lanchat"
+  ],
+  "author": "OgabekYuldoshev",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "tsup": "^8.4.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "*": [
+      "pnpm lint",
+      "git add ."
+    ]
+  },
+  "tsup": {
+    "target": "esnext",
+    "format": [
+      "esm"
+    ]
+  }
+}

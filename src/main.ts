@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import net from "node:net";
 import chalk from "chalk";
 import ora from "ora";

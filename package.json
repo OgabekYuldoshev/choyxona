@@ -8,7 +8,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">= 14"
+    "node": ">= 18"
   },
   "repository": {
     "directory": "https://github.com/OgabekYuldoshev/lanchat",

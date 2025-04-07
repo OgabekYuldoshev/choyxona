@@ -2,9 +2,10 @@
 	"name": "choyxona",
 	"version": "1.0.1",
 	"description": "Choyxona for uzbek developers !!!",
-	"main": "dist/main.mjs",
+	"main": "dist/main.js",
+	"type": "module",
 	"bin": {
-		"choyxona": "dist/main.mjs"
+		"choyxona": "dist/main.js"
 	},
 	"engines": {
 		"node": ">= 18"
@@ -20,7 +21,7 @@
 	"scripts": {
 		"dev": "tsx src/main.ts",
 		"build": "tsup ./src/main.ts",
-		"start": "node ./dist/main.mjs",
+		"start": "node ./dist/main.js",
 		"lint": "pnpm biome check --write ./src",
 		"prepare": "husky"
 	},

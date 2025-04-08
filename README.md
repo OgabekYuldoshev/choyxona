@@ -4,7 +4,7 @@ Mahalliy tarmoqda (LAN) terminal orqali tez va sodda chat!
 Node.js bilan yozilgan, o‘rnatilishi va ishlatilishi juda oson.
 
 <video width="640" height="360" controls>
-  <source src="./placeholder.mp4" type="video/mp4">
+  <source src="https://raw.githubusercontent.com/OgabekYuldoshev/choyxona/master/placeholder.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 

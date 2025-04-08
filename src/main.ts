@@ -66,7 +66,7 @@ export function getLocalIpAddress(): string {
 		startServer(PORT);
 		await new Promise((r) => setTimeout(r, 500));
 	} else {
-		console.log(chalk.green(`✅ Server topildi: ${host}`));
+		console.log(chalk.green(`✅[Choyxona] Server topildi: ${host}`));
 	}
 
 	const client = net.createConnection({ host, port: PORT }, () => {

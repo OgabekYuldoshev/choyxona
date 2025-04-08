@@ -42,7 +42,7 @@ export function startServer(port: number) {
 							const clients = Array.from(storage.values());
 							const list = clients.map((c) => ({
 								username: c.username,
-								localAddress: c.socket.localAddress,
+								remoteAddress: c.socket.remoteAddress || "unknown",
 							}));
 							socket.write(`/list ${JSON.stringify(list)}\n`);
 						}
@@ -82,6 +82,6 @@ export function startServer(port: number) {
 	}
 
 	server.listen(port, () => {
-		console.log(`🚀 [LANChat] Server ishga tushdi: ${port} portda`);
+		console.log(`🚀 [Choyxona] Server ishga tushdi: ${port} portda`);
 	});
 }

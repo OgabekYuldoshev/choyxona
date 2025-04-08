@@ -2,6 +2,7 @@ import type net from "node:net";
 import readline from "node:readline";
 import { AlignmentEnum, AsciiTable3 } from "ascii-table3";
 import chalk from "chalk";
+
 export function startClient(socket: net.Socket) {
 	const rl = readline.createInterface({
 		input: process.stdin,
@@ -28,11 +29,11 @@ export function startClient(socket: net.Socket) {
 						{
 							const result = JSON.parse(values[0] || "[]");
 							const table = new AsciiTable3("Online foydalanuvchilar!")
-								.setHeading("Username", "Local address")
+								.setHeading("Username", "IP")
 								.setAlign(3, AlignmentEnum.CENTER);
 
 							for (const res of result) {
-								table.addRow(res.username, res.localAddress);
+								table.addRow(res.username, res.remoteAddress);
 							}
 
 							console.log(`\n${table.toString()}`);

@@ -2,7 +2,7 @@ import type net from "node:net";
 import readline from "node:readline";
 import chalk from "chalk";
 
-export function startClient(client: net.Socket) {
+export function startClient(socket: net.Socket) {
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
@@ -11,19 +11,19 @@ export function startClient(client: net.Socket) {
 
 	let nick = "";
 
-	client.on("data", (data) => {
+	socket.on("data", (data) => {
 		const msg = data.toString().trim();
-		if (msg === "NICK?") {
+		if (msg === "username?") {
 			rl.question(chalk.yellowBright("🟢 Nickname kiriting: "), (n) => {
 				nick = n;
-				client.write(n);
+				socket.write(n);
 			});
 		} else {
 			if (msg.startsWith(`@${nick}`)) {
 				// shaxsiy xabar
 				console.log(chalk.bgMagentaBright.black(` 📩 PM: ${msg}`));
 			} else {
-				console.log(chalk.greenBright(`💬 ${msg}`));
+				console.log(chalk.greenBright(`\n💬 ${msg}`));
 			}
 			rl.prompt();
 		}
@@ -31,14 +31,14 @@ export function startClient(client: net.Socket) {
 
 	rl.on("line", (line) => {
 		if (line.trim()) {
-			client.write(line.trim());
+			socket.write(`${line.trim()}`);
 		}
 		rl.prompt();
 	});
 
 	rl.on("SIGINT", () => {
 		console.log(chalk.redBright("\n🚪 Chiqyapsiz..."));
-		client.end();
+		socket.end();
 		process.exit(0);
 	});
 

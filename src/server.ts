@@ -1,55 +1,50 @@
 import net from "node:net";
-
-type Client = {
-	socket: net.Socket;
-	nickname: string;
-};
+import { storage } from "./storage";
 
 export function startServer(port: number) {
-	const clients: Client[] = [];
-
 	const server = net.createServer((socket) => {
-		let nickname = "";
-		socket.write("NICK?\n");
+		let username = "";
+		socket.write("username?\n");
 
 		socket.on("data", (data) => {
 			const message = data.toString().trim();
-			if (!nickname) {
-				nickname = message;
-				const has = clients.find((c) => c.nickname === nickname);
-				if (has) {
+			if (!username) {
+				username = message;
+				if (storage.has(username)) {
 					socket.write("🚫 Bu nickdan foydalanuvchi bor\n");
-					socket.write("NICK?\n");
-					nickname = "";
+					socket.write("username?\n");
+					username = "";
 					return;
 				}
-				clients.push({ socket, nickname });
-				broadcast(`🟢 ${nickname} qo‘shildi`, nickname);
+				storage.set(username, { username, socket });
+				broadcast(`🟢 ${username} qo‘shildi`, username);
 				return;
 			}
 
 			if (message.startsWith("@")) {
-				const [rawNick, ...rest] = message.split(" ");
-				const targetNick = rawNick?.slice(1);
+				const [rawUsername, ...rest] = message.split(" ");
+				const targetUsername = rawUsername?.slice(1) || "";
 				const msg = rest.join(" ");
-				const target = clients.find((c) => c.nickname === targetNick);
+				const target = storage.get(targetUsername);
 				if (target) {
-					target.socket.write(`[PM] ${nickname} > ${msg}\n`);
+					target.socket.write(`[PM] ${username} > ${msg}\n`);
 				} else {
-					socket.write(`❌ ${targetNick} topilmadi\n`);
+					socket.write(`❌ ${targetUsername} topilmadi\n`);
 				}
 				return;
 			}
 
-			broadcast(`${nickname}: ${message}`, nickname);
+			broadcast(`${username}: ${message}`, username);
 		});
 
 		socket.on("end", () => {
-			const idx = clients.findIndex((c) => c.socket === socket);
-			if (idx !== -1) {
-				const leftNick = clients[idx]?.nickname || "";
-				clients.splice(idx, 1);
-				broadcast(`🔴 ${leftNick} chiqdi`, leftNick);
+			const session = Array.from(storage.values()).find(
+				(c) => c.socket === socket,
+			);
+			if (session) {
+				storage.delete(session.username);
+
+				broadcast(`🔴 ${session.username} chiqdi`, session.username);
 			}
 		});
 
@@ -57,8 +52,8 @@ export function startServer(port: number) {
 	});
 
 	function broadcast(msg: string, from: string) {
-		for (const c of clients) {
-			if (c.nickname !== from) {
+		for (const c of Array.from(storage.values())) {
+			if (c.username !== from) {
 				c.socket.write(`${msg}\n`);
 			}
 		}

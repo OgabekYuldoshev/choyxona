@@ -8,6 +8,9 @@ Node.js bilan yozilgan, o‘rnatilishi va ishlatilishi juda oson.
   Your browser does not support the video tag.
 </video>
 
+
+[![Video Preview](https://raw.githubusercontent.com/yourusername/yourrepository/main/path/to/video.mp4)](https://raw.githubusercontent.com/OgabekYuldoshev/choyxona/master/placeholder.mp4)
+
 ---
 
 ## ✨ Xususiyatlar

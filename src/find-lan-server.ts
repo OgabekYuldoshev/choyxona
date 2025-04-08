@@ -3,26 +3,27 @@ import os from "node:os";
 
 export async function findLanServer(port: number): Promise<string | null> {
 	const interfaces = os.networkInterfaces();
+	let subnetBase: string | null = null;
 
-	let subnetBase = "192.168.0";
 	for (const name of Object.keys(interfaces)) {
 		for (const net of interfaces[name] || []) {
-			if (
-				net.family === "IPv4" &&
-				!net.internal &&
-				net.address.startsWith("192.168")
-			) {
+			if (net.family === "IPv4" && !net.internal && net.address) {
 				const parts = net.address.split(".");
-				subnetBase = `${parts[0]}.${parts[1]}.${parts[2]}`;
+				if (parts.length === 4) {
+					subnetBase = `${parts[0]}.${parts[1]}.${parts[2]}`;
+					break;
+				}
 			}
 		}
+		if (subnetBase) break;
 	}
+
+	if (!subnetBase) return null;
 
 	const tryConnect = (ip: string) =>
 		new Promise<boolean>((resolve) => {
 			const socket = new net.Socket();
 			socket.setTimeout(30);
-
 			socket.once("connect", () => {
 				socket.destroy();
 				resolve(true);

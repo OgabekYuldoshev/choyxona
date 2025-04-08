@@ -30,10 +30,12 @@
 	"license": "ISC",
 	"dependencies": {
 		"chalk": "^5.4.1",
+		"minimist": "^1.2.8",
 		"ora": "^8.2.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@types/minimist": "^1.2.5",
 		"@types/node": "^22.14.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.5.0",

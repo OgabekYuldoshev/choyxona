@@ -16,6 +16,13 @@ export function startServer(port: number) {
 			const message = data.toString().trim();
 			if (!nickname) {
 				nickname = message;
+				const has = clients.find((c) => c.nickname === nickname);
+				if (has) {
+					socket.write("🚫 Bu nickdan foydalanuvchi bor\n");
+					socket.write("NICK?\n");
+					nickname = "";
+					return;
+				}
 				clients.push({ socket, nickname });
 				broadcast(`🟢 ${nickname} qo‘shildi`, nickname);
 				return;

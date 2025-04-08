@@ -6,7 +6,7 @@ export function startClient(client: net.Socket) {
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
-		prompt: chalk.cyanBright("💬 Sizning xabaringiz: "),
+		prompt: chalk.cyanBright("↪: "),
 	});
 
 	let nick = "";

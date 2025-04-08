@@ -1,7 +1,7 @@
 import type net from "node:net";
 import readline from "node:readline";
+import { AlignmentEnum, AsciiTable3 } from "ascii-table3";
 import chalk from "chalk";
-
 export function startClient(socket: net.Socket) {
 	const rl = readline.createInterface({
 		input: process.stdin,
@@ -20,8 +20,28 @@ export function startClient(socket: net.Socket) {
 			});
 		} else {
 			if (msg.startsWith(`@${nick}`)) {
-				// shaxsiy xabar
 				console.log(chalk.bgMagentaBright.black(` 📩 PM: ${msg}`));
+			} else if (msg.startsWith("/")) {
+				const [command, ...values] = msg.split(" ");
+				switch (command) {
+					case "/list":
+						{
+							const result = JSON.parse(values[0] || "[]");
+							const table = new AsciiTable3("Online foydalanuvchilar!")
+								.setHeading("Username", "Local address")
+								.setAlign(3, AlignmentEnum.CENTER);
+
+							for (const res of result) {
+								table.addRow(res.username, res.localAddress);
+							}
+
+							console.log(`\n${table.toString()}`);
+						}
+						break;
+
+					default:
+						break;
+				}
 			} else {
 				console.log(chalk.greenBright(`\n💬 ${msg}`));
 			}
@@ -30,8 +50,9 @@ export function startClient(socket: net.Socket) {
 	});
 
 	rl.on("line", (line) => {
-		if (line.trim()) {
-			socket.write(`${line.trim()}`);
+		const msg = line.trim();
+		if (msg) {
+			socket.write(`${msg}`);
 		}
 		rl.prompt();
 	});

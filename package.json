@@ -29,6 +29,7 @@
 	"author": "Ogabek Yuldoshev <https://github.com/OgabekYuldoshev>",
 	"license": "ISC",
 	"dependencies": {
+		"ascii-table3": "^0.9.0",
 		"chalk": "^5.4.1",
 		"minimist": "^1.2.8",
 		"ora": "^8.2.0"

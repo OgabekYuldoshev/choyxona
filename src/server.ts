@@ -6,7 +6,7 @@ export function startServer(port: number) {
 		let username = "";
 		socket.write("username?\n");
 
-		socket.on("data", (data) => {
+		socket.on("data", async (data) => {
 			const message = data.toString().trim();
 			if (!username) {
 				username = message;
@@ -31,6 +31,28 @@ export function startServer(port: number) {
 				} else {
 					socket.write(`❌ ${targetUsername} topilmadi\n`);
 				}
+				return;
+			}
+
+			if (message.startsWith("/")) {
+				const [command] = message.split(" ");
+				switch (command) {
+					case "/list":
+						{
+							const clients = Array.from(storage.values());
+							const list = clients.map((c) => ({
+								username: c.username,
+								localAddress: c.socket.localAddress,
+							}));
+							socket.write(`/list ${JSON.stringify(list)}\n`);
+						}
+						break;
+
+					default:
+						socket.write("❌ Bunday command mavjud emas\n");
+						break;
+				}
+
 				return;
 			}
 

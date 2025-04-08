@@ -8,11 +8,6 @@ Node.js bilan yozilgan, o‘rnatilishi va ishlatilishi juda oson.
   Your browser does not support the video tag.
 </video>
 
-
-
-[Video](https://raw.githubusercontent.com/OgabekYuldoshev/choyxona/master/placeholder.mp4)
-
-
 ---
 
 ## ✨ Xususiyatlar
